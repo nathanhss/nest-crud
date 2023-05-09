@@ -29,11 +29,11 @@ export class ArticleService {
     }
   }
 
-  async deleteArticleByTitle(data: Prisma.ArticleWhereUniqueInput) {
+  async deleteArticleById(id: string) {
     try {
       const article = await this.prisma.article.findFirst({
         where: {
-          title: data.title,
+          id,
         },
       });
 
@@ -43,31 +43,7 @@ export class ArticleService {
 
       const deletedArticle = await this.prisma.article.delete({
         where: {
-          title: data.title,
-        },
-      });
-
-      return deletedArticle;
-    } catch (error) {
-      throw new Error(error.message);
-    }
-  }
-
-  async deleteArticleById(data: Prisma.ArticleWhereUniqueInput) {
-    try {
-      const article = await this.prisma.article.findFirst({
-        where: {
-          id: data.id,
-        },
-      });
-
-      if (!article) {
-        throw new Error('Article not found');
-      }
-
-      const deletedArticle = await this.prisma.article.delete({
-        where: {
-          id: data.id,
+          id,
         },
       });
 
@@ -83,10 +59,10 @@ export class ArticleService {
     return articles;
   }
 
-  async getArticleById(data: Prisma.ArticleWhereUniqueInput) {
+  async getArticleById(id: string) {
     const article = await this.prisma.article.findFirst({
       where: {
-        id: data.id,
+        id,
       },
     });
 
